@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frank.boot.dao.user.SysUserMapper">
+
+    <resultMap type="com.frank.boot.domain.user.SysUser" id="userResultMap">
+        <id column="id" property="id"/>
+        <result column="user_name" property="userName"/>
+        <result column="pass_word" property="passWord"/>
+        <result column="user_enable" property="userEnable"/>
+        <result column="head_portrait" property="headPortrait"/>
+        <result column="name" property="name"/>
+        <result column="mobile" property="mobile"/>
+        <result column="phone" property="phone"/>
+        <result column="fax" property="fax"/>
+        <result column="email" property="email"/>
+        <result column="qq" property="qq"/>
+        <result column="msn" property="msn"/>
+        <result column="birthdate" property="birthdate"/>
+        <result column="note" property="note"/>
+        <result column="group" property="group"/>
+        <result column="duty" property="duty"/>
+        <result column="dutyName" property="dutyName"/>
+        <result column="organization" property="organization"/>
+        <result column="organizationNames" property="organizationNames"/>
+        <collection property="roles" ofType="com.frank.boot.domain.user.SysRole" select="selectRole" column="id">
+        </collection>
+    </resultMap>
+    <select id="selectUserInfoByPager" parameterType="java.util.Map" resultMap="userResultMap">
+		select
+            ur.id,
+            ur.user_name,
+            ur.pass_word,
+            ur.name,
+            ur.mobile,
+            ur.phone,
+            ur.fax,
+            ur.email,
+            ur.qq,
+            ur.msn,
+            ur.birthdate,
+            ur.note,
+            ur.group,
+            ur.duty,
+            GROUP_CONCAT(uorg.orgid) as organization,
+            group_concat(org.name) as organization_names,
+            case when ur.duty = 3 then '公司管理' when ur.duty = 2 then '部门管理' else '员工' end as dutyName,
+            user_enable 
+        from sys_user ur 
+        left join sys_user_organizational uorg on uorg.userid =ur.id 
+        left join sys_organizational as org on uorg.orgid=org.id
+        where 1=1
+        <if test="organization!='' and organization!=null and organization!=0" >
+    		and exists (select 1 from sys_user_organizational  where ur.id=userid and orgid=#{organization})  
+    	</if>
+        <if test="user_name!=''and user_name!=null"> 
+        	and user_name like CONCAT('%',#{user_name},'%')
+       	</if>
+        <if test="user_enable!='' and user_enable!=null"> 
+        	and user_enable=#{user_enable,jdbcType=VARCHAR}
+       	</if>
+    	group by ur.user_name
+    	
+    </select>
+    <select id="selectRole" parameterType="int" resultType="com.frank.boot.domain.user.SysRole">
+        select
+            sr.id,
+            sr.role_key,
+            sr.role_name,
+            sr.role_note,
+            sr.permissions,
+            sr.menuids
+        from  sys_user_role sur
+        left join sys_role sr on sr.id = sur.role_id where sur.user_id = #{id}
+    </select>
+    <select id="selectUserInfoByUserId" resultMap="userResultMap">
+        
+		select
+            ur.id,
+            ur.user_name,
+            ur.pass_word,
+            ur.name,
+            ur.mobile,
+            ur.phone,
+            ur.fax,
+            ur.email,
+            ur.qq,
+            ur.msn,
+            ur.birthdate,
+            ur.note,
+            ur.group,
+            ur.duty,
+            GROUP_CONCAT(uorg.orgid) as organization,
+            group_concat(org.name) as organization_names,
+            case when ur.duty = 3 then '公司管理' when ur.duty = 2 then '部门管理' when ur.duty = 1 then '员工' else null end as dutyName,
+            user_enable
+        from sys_user ur 
+        join sys_user_organizational uorg on uorg.userid =ur.id 
+        join sys_organizational as org on uorg.orgid=org.id
+		where ur.user_name = #{userName}
+    </select>
+</mapper>

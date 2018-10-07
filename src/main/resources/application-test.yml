@@ -1,0 +1,53 @@
+testAddress: http://localhost:8081/webservice/test/export?wsdl
+exportAddress: /QualiIns
+spring:
+#  data:
+#    mongodb:
+#      host: localhost
+#      port: 27017
+#      username: root
+#      password: cypicpwd
+#      database: test
+#      grid-fs-database: fs
+#      uri: mongodb://localhost:10041,localhost:10042,localhost:10043/test
+#    uri: mongodb://root:cypicpwd@localhost:27017/test
+  datasource:
+    dynamic:
+      master:
+        username: root
+        password: admin
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/test?characterEncoding=utf8&useSSL=false
+        druid:
+          initial-size: 12
+          max-active: 42
+          min-idle: 11
+          max-wait: -1
+          min-evictable-idle-time-millis: 30007
+          max-evictable-idle-time-millis: 300220
+          time-between-eviction-runs-millis: 0
+          validation-query: select 1
+          validation-query-timeout: -1
+          test-on-borrow: false
+          test-on-return: false
+          test-while-idle: true
+    initialization-mode: always
+    druid:
+      stat-view-servlet:
+        loginUsername: admin
+        loginPassword: 123456
+  redis:
+    host: localhost
+    port: 6379
+    expire: 1800
+    timeout: 0
+    jedis:
+      pool:
+        max-idle: 8
+        min-idle: 0
+        max-active: 8
+        max-wait: -1
+logging:
+  level:
+    com.frank.boot.dao: debug
+#    root: debug

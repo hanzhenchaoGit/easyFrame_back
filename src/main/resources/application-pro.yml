@@ -1,0 +1,106 @@
+receiveOrderInfoAddress: /receiveOrderInfo
+lims: http://10.19.1.81/STARLIMS11.KBFDD/services/generic.asmx?wsdl
+
+spring:
+  data:
+    mongodb:
+      host: 10.19.1.138
+      port: 27018
+      username: erpfile
+      password: erpfile_user_pwd
+      database: files
+      grid-fs-database: fs
+  datasource:
+    dynamic:
+      datasource:
+        master:
+          username: root
+          password: root
+          driver-class-name: com.mysql.jdbc.Driver
+          url: jdbc:mysql://10.19.1.66:3306/newerp?characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull
+          druid:
+            initial-size: 12
+            max-active: 42
+            min-idle: 11
+            max-wait: -1
+            min-evictable-idle-time-millis: 30007
+            max-evictable-idle-time-millis: 300220
+            time-between-eviction-runs-millis: 60
+            validation-query: select 1
+            validation-query-timeout: -1
+            test-on-borrow: false
+            test-on-return: false
+            test-while-idle: true
+        slave_1:
+          username: root
+          password: root
+          driver-class-name: com.mysql.jdbc.Driver
+          url: jdbc:mysql://10.19.1.66:3306/ldcrm?characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull
+          druid:
+            initial-size: 12
+            max-active: 42
+            min-idle: 11
+            max-wait: -1
+            min-evictable-idle-time-millis: 30007
+            max-evictable-idle-time-millis: 300220
+            time-between-eviction-runs-millis: 60
+            validation-query: select 1
+            validation-query-timeout: -1
+            test-on-borrow: false
+            test-on-return: false
+            test-while-idle: true
+        slave_2:
+          username: root
+          password: root
+          driver-class-name: com.mysql.jdbc.Driver
+          url: jdbc:mysql://10.19.1.66:3306/ldcrm?characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull
+          druid:
+            initial-size: 12
+            max-active: 42
+            min-idle: 11
+            max-wait: -1
+            min-evictable-idle-time-millis: 30007
+            max-evictable-idle-time-millis: 300220
+            time-between-eviction-runs-millis: 60
+            validation-query: select 1
+            validation-query-timeout: -1
+            test-on-borrow: false
+            test-on-return: false
+            test-while-idle: true
+#  druid:
+#    stat-view-servlet:
+#      loginUsername: admin
+#      loginPassword: 123456
+
+  redis:
+    host: 10.19.1.80
+    port: 6379
+    expire: 1800
+    timeout: 0
+    jedis:
+      pool:
+        max-idle: 8
+        min-idle: 0
+        max-active: 8
+        max-wait: -1
+  activiti:
+    database-schema-update: true
+    check-process-definitions: false
+    db-identity-used: false
+    history-level: full
+canal:
+  client:
+    instances:
+      example:
+        clusterEnabled: false
+        host: 10.19.1.138
+        port: 3307
+        batchSize: 10
+        acquireInterval: 1000
+        retryCount: 20
+
+logging:
+  level:
+    com.frank.boot.dao: debug
+#    root: debug
+#    root: debug
