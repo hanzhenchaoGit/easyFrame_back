@@ -1,32 +1,22 @@
 # bootEasyFrame使用说明
 ## 前端代码  
-https://github.com/hanzhenchaoGit/booteasyframe-front
+https://github.com/hanzhenchaoGit/easyframe-front
 ## 后端代码
-https://github.com/hanzhenchaoGit/bootEasyFrame-back
+https://github.com/hanzhenchaoGit/easyFrame-back
 ## 框架使用技术总览
 shiro权限控制  
 cxfwebservice  
-redis缓存:主要用于存储session  
+redis缓存: 主要用于存储session  
 fastJson  
-mongodb  
+mongodb: 文件存储  
 druid  
 mybatis plus 
 kaptcha验证码  
 poi  
 commons-jexl3:字符串反射为代码  
+quartz: 定时作业,暂时只支持class的定时调用  
 velocity: 模板引擎,主要用于代码生成模板解析
 
-## 前后端访问控制(默认使用session)
-session:前后端分离 解决跨域问题时保证session不丢失 将前端的request的 stateless 设置为false即可  
-后端需要将:  
-1.stateless下的ShiroConfig的@Configuration注释掉 并将session包下的@Configuration解注释  
-2.filter包下的CrosFilter需要按照注释中要求的配置 打开session相关的配置  
-3.登录controller使用controller.system.StatelessLoginController 而不是StatelessLoginController
-stateless:校验访问权限时需要在header中添加权限字段，后端解析是否有权限  
-1,2,3反之配置stateless
-4.保证pom依赖中有spring-cache以及ehcache依赖
-5.boot启动类添加@EnableCaching  
-** ehcache配置中timeToIdleSeconds="1800" 存入的缓存元素的超时时间为30分钟 每次访问会自动刷新这个最大时限 
 ## 系统环境配置
 application.properties 
 spring.profiles.active=@env@ 与pom中的maven profile关联，控制不同环境下的变量参数
@@ -85,14 +75,20 @@ pom.xml
     </dependency>
 打包方式改为war,部署时直接放在tomcat的webapp目录下,tomcat启动会自动部署
 
-查询
-前端分页参数 currentPage--当前查询页数 
-pageSize--每页多少条数据 需要导出整个列表数据或查询所有数据时 将pageSize设置为0 
-export--需要导出数据到excel时设置属性为Y pageSizeZero为Y isPage设置为Y
-
 
 数据库：
 mysql 在windows环境下在查询字符串时忽略大小写 修改为敏感大小写my-default.ini lower-case-table-names=0 重启mysql服务
 
 安装canal starter
 mvn install:install-file -DgroupId=com.wwjd.canal -DartifactId=starter-canal -Dversion=1.0.0 -Dpackaging=jar -Dfile=./starter-canal-1.0.0.jar
+
+## 项目启动
+前端使用的花裤衩大佬的前端框架做的开发  
+下载依赖: npm i  
+启动开发: npm run dev  
+后端自己将比较流行的技术框架使用springboot集成起来
+首先使用resources下的frame_init.sql初始化项目所需的数据库环境
+
+后端推荐使用idea导入maven项目后,配置好jdk1.8,直接使用BootApplication启动类进行启动  
+启动前先安装redis mongodb canal(数据库同步中间件可以按照业务需求开启,不需要的话只需要将启动类的注解注释即可)
+
