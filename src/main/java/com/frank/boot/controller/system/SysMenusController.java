@@ -21,7 +21,7 @@ public class SysMenusController extends BaseController{
 
     @PostMapping("/addSysMenus")
     public ResultData add(@RequestBody SysMenus iSysMenus) {
-        iSysMenusService.insertOrUpdate(iSysMenus);
+        iSysMenusService.saveOrUpdate(iSysMenus);
         return new ResultData();
     }
     @GetMapping("/getSysMenusList")
@@ -30,7 +30,7 @@ public class SysMenusController extends BaseController{
     }
     @GetMapping("/delSysMenus")
     public ResultData del(@RequestParam Integer id) {
-        iSysMenusService.deleteById(id);
+        iSysMenusService.removeById(id);
         return new ResultData();
     }
 

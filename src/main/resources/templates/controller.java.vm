@@ -1,6 +1,6 @@
 package ${package.Controller};
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.frank.boot.controller.base.BaseController;
 import com.frank.boot.domain.system.ResultData;
 import com.frank.boot.exception.PagerException;
@@ -27,14 +27,14 @@ public class ${table.controllerName} extends BaseController{
 #if($codeTypes.indexOf("addAndUpdate") > -1)
     @PostMapping("/add${entity}")
     public ResultData add(@RequestBody ${entity} i${entity}) {
-        i${entity}Service.insertOrUpdate(i${entity});
+        i${entity}Service.saveOrUpdate(i${entity});
         return new ResultData();
     }
 #end
 #if($codeTypes.indexOf("selectPager") > -1)
     @GetMapping("/get${entity}ByPager")
     public ResultData get${entity}ListByPager() throws PagerException {
-        EntityWrapper<${entity}> query = new EntityWrapper<>();
+        QueryWrapper<${entity}> query = new QueryWrapper<>();
 #if($selectPager!="")
 #set($pageParams = $selectPager.split(","))
 #foreach($params in $pageParams )
@@ -56,7 +56,7 @@ public class ${table.controllerName} extends BaseController{
 #if($codeTypes.indexOf("selectList") > -1)
     @GetMapping("/get${entity}List")
     public ResultData get${entity}List(){
-        EntityWrapper<${entity}> query = new EntityWrapper<>();
+        QueryWrapper<${entity}> query = new QueryWrapper<>();
 #if($selectList!="")
 #set($listParams = $selectList.split(","))
 #foreach($params in $listParams )
@@ -78,7 +78,7 @@ public class ${table.controllerName} extends BaseController{
 #if($codeTypes.indexOf("del") > -1)
     @GetMapping("/del${entity}")
     public ResultData del(@RequestParam Integer id) {
-        i${entity}Service.deleteById(id);
+        i${entity}Service.removeById(id);
         return new ResultData();
     }
 #end

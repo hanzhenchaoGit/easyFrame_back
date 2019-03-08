@@ -1,6 +1,6 @@
 package com.frank.boot.controller.user;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.frank.boot.controller.base.BaseController;
 import com.frank.boot.domain.system.ResultData;
 import com.frank.boot.exception.PagerException;
@@ -23,16 +23,16 @@ public class SysUserloginLogController extends BaseController{
 
     @PostMapping("/addSysUserloginLog")
     public ResultData add(@RequestBody SysUserloginLog iSysUserloginLog) {
-//        iSysUserloginLogService.insertOrUpdate(iSysUserloginLog);
+//        iSysUserloginLogService.saveOrUpdate(iSysUserloginLog);
         return new ResultData();
     }
     @GetMapping("/getSysUserloginLogByPager")
     public ResultData getSysUserloginLogListByPager() throws PagerException {
-        EntityWrapper<SysUserloginLog> query = new EntityWrapper<>();
+        QueryWrapper<SysUserloginLog> query = new QueryWrapper<>();
         if(!StringUtils.isEmpty(getString("username"))){
           query.like("username",getString("username"));
         }
-        return new ResultData(iSysUserloginLogService.selectPage(getPager(),query),getPager());
+        return new ResultData(iSysUserloginLogService.page(getPager(),query),getPager());
     }
 }
 

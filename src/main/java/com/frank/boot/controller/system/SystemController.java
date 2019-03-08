@@ -1,7 +1,7 @@
 package com.frank.boot.controller.system;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.frank.boot.controller.base.BaseController;
 import com.frank.boot.exception.PagerException;
 import com.frank.boot.dao.system.CommonDao;
@@ -57,9 +57,9 @@ public class SystemController extends BaseController {
         Boolean hasParams = false;
         SysSqlConfig config = new SysSqlConfig();
         config.setUuid(uuid);
-        EntityWrapper<SysSqlConfig> query =  new EntityWrapper<>();
+        QueryWrapper<SysSqlConfig> query =  new QueryWrapper<>();
         query.setEntity(config);
-        config = systemService.selectOne(query);
+        config = systemService.getOne(query);
         String content = config.getContent();
         String bodys [] = content.split("\\#\\#");
         String beforBody = bodys[0];

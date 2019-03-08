@@ -14,7 +14,7 @@ spring:
       datasource:
         master:
           username: root
-          password: admin
+          password: 123456
           driver-class-name: com.mysql.jdbc.Driver
           url: jdbc:mysql://localhost:3306/frame?characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull
           druid:
@@ -32,12 +32,12 @@ spring:
             test-while-idle: true
         slave_1:
           username: root
-          password: admin
+          password: 123456
           driver-class-name: com.mysql.jdbc.Driver
           url: jdbc:mysql://localhost:3306/frame?characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull
         slave_2:
           username: root
-          password: admin
+          password: 123456
           driver-class-name: com.mysql.jdbc.Driver
           url: jdbc:mysql://localhost:3306/frame?characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull
 
@@ -63,16 +63,6 @@ spring:
     db-identity-used: false
     history-level: full
 
-canal:
-  client:
-    instances:
-      example:
-        clusterEnabled: false
-        host: localhost
-        port: 3307
-        batchSize: 10
-        acquireInterval: 1000
-        retryCount: 20
 
 logging:
   level:

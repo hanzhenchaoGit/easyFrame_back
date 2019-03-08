@@ -1,8 +1,8 @@
 package com.frank.boot.domain.task;
 
 
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.enums.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.IdType;
 
 public class ReportHy {
     @TableId(value = "id", type = IdType.AUTO)

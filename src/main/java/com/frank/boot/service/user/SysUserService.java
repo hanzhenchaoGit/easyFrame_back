@@ -1,10 +1,9 @@
 package com.frank.boot.service.user;
 
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.frank.boot.domain.user.SysUser;
 import com.frank.boot.domain.user.SysUserRole;
-import com.baomidou.mybatisplus.service.IService;
-
+import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
 import java.util.Map;
 

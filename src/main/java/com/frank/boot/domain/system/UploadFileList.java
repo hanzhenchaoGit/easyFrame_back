@@ -1,5 +1,10 @@
 package com.frank.boot.domain.system;
 
+import com.frank.boot.domain.base.PageInfo;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+
 import java.util.Date;
 import java.io.Serializable;
 
@@ -102,4 +107,6 @@ public class UploadFileList implements Serializable {
         ", uploaduser=" + uploaduser +
         "}";
     }
+
+
 }

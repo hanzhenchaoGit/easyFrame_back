@@ -1,7 +1,8 @@
 package com.frank.boot.dao.user;
 
 
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.frank.boot.domain.user.SysUser;
 
 import java.util.List;
@@ -10,8 +11,8 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
 
-public interface SysUserMapper extends com.baomidou.mybatisplus.mapper.BaseMapper<SysUser> {
-    public List<SysUser>  selectUserInfoByPager(Page<SysUser> pager,Map<String,String> params);
+public interface SysUserMapper extends BaseMapper<SysUser> {
+    public List<SysUser>  selectUserInfoByPager(Page<SysUser> pager, Map<String,String> params);
 
     SysUser selectUserInfoByUserId(String userName);
     @Update("update sys_user set user_enable='2' where id =#{id}")

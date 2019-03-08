@@ -1,111 +1,121 @@
 package com.frank.boot.utils;
 
+import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
-import com.baomidou.mybatisplus.generator.config.rules.DbType;
+import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-import com.frank.boot.domain.system.SysCodegenConfig;
-import com.frank.boot.domain.system.SysDatasource;
+import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class MpGenerator {
-    @Value("${spring.datasource.dynamic.datasource.master.username}")
-    private String username;
-    @Value("${spring.datasource.dynamic.datasource.master.password}")
-    private String password;
-    @Value("${spring.datasource.dynamic.datasource.master.driver-class-name}")
-    private String driver;
-    @Value("${spring.datasource.dynamic.datasource.master.url}")
-    private String url;
-    public SysDatasource getDefaultDataSource(){
-        SysDatasource sysDatasource = new SysDatasource();
-        sysDatasource.setId(1);
-        sysDatasource.setName("master");
-        sysDatasource.setDriver(driver);
-        sysDatasource.setUsername(username);
-        sysDatasource.setPassword(password);
-        sysDatasource.setUrl(url);
-        return sysDatasource;
-    }
-
-    public static void generateByTables(String packageName, SysCodegenConfig codegenConfig) {
-        GlobalConfig config = new GlobalConfig();
-        SysDatasource sysDatasource = codegenConfig.getSysDatasource();
-        DataSourceConfig dataSourceConfig = new DataSourceConfig();
-        if("com.mysql.jdbc.Driver".equals(sysDatasource.getDriver())){
-            dataSourceConfig.setDbType(DbType.MYSQL);
-        }else if("oracle.jdbc.driver.OracleDriver".equals(sysDatasource.getDriver())
-                ||"oracle.jdbc.OracleDriver".equals(sysDatasource.getDriver())){
-            dataSourceConfig.setDbType(DbType.ORACLE);
-        }
-
-        dataSourceConfig.setUrl(sysDatasource.getUrl())
-                .setUsername(sysDatasource.getUsername())
-                .setPassword(sysDatasource.getPassword())
-                .setDriverName(sysDatasource.getDriver());
-        StrategyConfig strategyConfig = new StrategyConfig();
-        strategyConfig
-                .setCapitalMode(true)
-                .setEntityLombokModel(false)
-                .setDbColumnUnderline(true)
-                .setNaming(NamingStrategy.underline_to_camel)
-                .setInclude(codegenConfig.getTableName());//修改替换成你需要的表名，多个表名传数组
-        config.setActiveRecord(false)
-                .setAuthor(codegenConfig.getAuthor())
-                .setOutputDir(codegenConfig.getOutpath())
-                .setFileOverride(true).setServiceName("%sService");;
-        String moduleName = codegenConfig.getModule();
-
-
-        InjectionConfig cfg = new InjectionConfig() {
-          @Override
-          public void initMap() {
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put("ModuleName",moduleName);
-            map.put("codeTypes",codegenConfig.getGenType());
-              Map<String,Object> params = new HashMap();
-              if(!StringUtils.isEmpty(codegenConfig.getQueryParams())){
-                  params = resolveQueryPamras(codegenConfig.getQueryParams());
-              }
-            map.putAll(params);
-            this.setMap(map);
-          }
-        };
-        new AutoGenerator().setGlobalConfig(config)
-            .setDataSource(dataSourceConfig)
-            .setStrategy(strategyConfig)
-            .setPackageInfo(
-                new PackageConfig()
-                    .setParent(packageName)
-                    .setController("controller."+moduleName)
-                    .setService("service."+moduleName)
-                    .setServiceImpl("service."+moduleName+".impl")
-                    .setMapper("dao."+moduleName)
-                    .setEntity("domain."+moduleName)
-                    .setXml("mapper."+moduleName)
-            ).setCfg(cfg).execute();
-    }
-
     /**
-     * selectList::table_name@@like,module@@eq|||selectPager::table_name@@like
-     * @param paramStr
-     * @return
+     * <p>
+     * 读取控制台内容
+     * </p>
      */
-    private static Map<String,Object> resolveQueryPamras(String paramStr){
-        Map<String,Object> queryMap = new HashMap<>();
-        String [] codeTypeParms = paramStr.split("\\|\\|\\|");
-        for(String param : codeTypeParms){
-            String queryKey = param.split("::")[0];
-            String params = param.split("::")[1];
-            queryMap.put(queryKey,params);
+    public static String scanner(String tip) {
+        Scanner scanner = new Scanner(System.in);
+        StringBuilder help = new StringBuilder();
+        help.append("请输入" + tip + "：");
+        System.out.println(help.toString());
+        if (scanner.hasNext()) {
+            String ipt = scanner.next();
+            if (StringUtils.isNotEmpty(ipt)) {
+                return ipt;
+            }
         }
-        return queryMap;
+        throw new MybatisPlusException("请输入正确的" + tip + "！");
     }
+
+    public static void main(String[] args) {
+        // 代码生成器
+        AutoGenerator mpg = new AutoGenerator();
+
+        // 全局配置
+        GlobalConfig gc = new GlobalConfig();
+        String projectPath = System.getProperty("user.dir");
+        gc.setOutputDir(projectPath + "/src/main/java");
+        gc.setAuthor("jobob");
+        gc.setOpen(false);
+        mpg.setGlobalConfig(gc);
+
+        // 数据源配置
+        DataSourceConfig dsc = new DataSourceConfig();
+        dsc.setUrl("jdbc:mysql://localhost:3306/frame?characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull");
+        // dsc.setSchemaName("public");
+        dsc.setDriverName("com.mysql.jdbc.Driver");
+        dsc.setUsername("root");
+        dsc.setPassword("123456");
+        mpg.setDataSource(dsc);
+
+        // 包配置
+        PackageConfig pc = new PackageConfig();
+        pc.setModuleName(scanner("模块"));
+        pc.setParent("com.frank.boot");
+        mpg.setPackageInfo(pc);
+
+        // 自定义配置
+        InjectionConfig cfg = new InjectionConfig() {
+            @Override
+            public void initMap() {
+                // to do nothing
+            }
+        };
+
+        // 如果模板引擎是 freemarker
+        String templatePath = "/templates/mapper.xml.ftl";
+        // 如果模板引擎是 velocity
+        // String templatePath = "/templates/mapper.xml.vm";
+
+        // 自定义输出配置
+        List<FileOutConfig> focList = new ArrayList<>();
+        // 自定义配置会被优先输出
+        focList.add(new FileOutConfig(templatePath) {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
+                return projectPath + "/src/main/resources/mapper/" + pc.getModuleName()
+                        + "/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
+            }
+        });
+
+        cfg.setFileOutConfigList(focList);
+        mpg.setCfg(cfg);
+
+        // 配置模板
+        TemplateConfig templateConfig = new TemplateConfig();
+
+        // 配置自定义输出模板
+        //指定自定义模板路径，注意不要带上.ftl/.vm, 会根据使用的模板引擎自动识别
+        // templateConfig.setEntity("templates/entity2.java");
+        // templateConfig.setService();
+        // templateConfig.setController();
+
+        templateConfig.setXml(null);
+        mpg.setTemplate(templateConfig);
+
+        // 策略配置
+        StrategyConfig strategy = new StrategyConfig();
+        strategy.setNaming(NamingStrategy.underline_to_camel);
+        strategy.setColumnNaming(NamingStrategy.underline_to_camel);
+        strategy.setSuperEntityClass("com.frank.boot.domain.base.PageInfo");
+        strategy.setEntityLombokModel(true);
+        strategy.setRestControllerStyle(true);
+        strategy.setSuperControllerClass("com.frank.boot.controller.base.BaseController");
+        strategy.setInclude(scanner("表名"));
+        strategy.setSuperEntityColumns("id");
+        strategy.setControllerMappingHyphenStyle(true);
+        strategy.setTablePrefix(pc.getModuleName() + "_");
+        mpg.setStrategy(strategy);
+        mpg.setTemplateEngine(new FreemarkerTemplateEngine());
+        mpg.execute();
+    }
+
 }

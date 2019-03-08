@@ -1,8 +1,7 @@
 package com.frank.boot.service.system;
 
 import com.frank.boot.domain.system.SysExportConfig;
-import com.baomidou.mybatisplus.service.IService;
-
+import com.baomidou.mybatisplus.extension.service.IService;
 /**
  * <p>
  * 表格导出配置 服务类

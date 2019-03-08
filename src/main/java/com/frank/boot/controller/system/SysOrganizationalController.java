@@ -20,12 +20,12 @@ public class SysOrganizationalController extends BaseController{
 
     @PostMapping("/addSysOrganizational")
     public ResultData add(@RequestBody SysOrganizational iSysOrganizational) {
-        iSysOrganizationalService.insertOrUpdate(iSysOrganizational);
+        iSysOrganizationalService.saveOrUpdate(iSysOrganizational);
         return new ResultData();
     }
     @GetMapping("/delSysOrganizational")
     public ResultData del(@RequestParam Integer id) {
-        iSysOrganizationalService.deleteById(id);
+        iSysOrganizationalService.removeById(id);
         return new ResultData();
     }
 

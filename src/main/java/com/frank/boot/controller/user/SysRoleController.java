@@ -1,6 +1,6 @@
 package com.frank.boot.controller.user;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.frank.boot.controller.base.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,21 +23,21 @@ public class SysRoleController extends BaseController{
 
     @PostMapping("/addSysRole")
     public ResultData add(@RequestBody SysRole iSysRole) {
-        iSysRoleService.insertOrUpdate(iSysRole);
+        iSysRoleService.saveOrUpdate(iSysRole);
         return new ResultData();
     }
     @GetMapping("/getSysRoleList")
     public ResultData getSysRoleList(){
-        EntityWrapper<SysRole> query = new EntityWrapper<>();
+        QueryWrapper<SysRole> query = new QueryWrapper<>();
         if(!StringUtils.isEmpty(getString("id"))){
           query.eq("id",getString("id"));
         }
 
-        return new ResultData(iSysRoleService.selectList(query));
+        return new ResultData(iSysRoleService.list(query));
     }
     @GetMapping("/delSysRole")
     public ResultData del(@RequestParam Integer id) {
-        iSysRoleService.deleteById(id);
+        iSysRoleService.removeById(id);
         return new ResultData();
     }
     }

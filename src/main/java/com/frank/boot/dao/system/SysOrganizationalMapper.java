@@ -1,7 +1,7 @@
 package com.frank.boot.dao.system;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.frank.boot.domain.system.SysOrganizational;
-import com.baomidou.mybatisplus.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 

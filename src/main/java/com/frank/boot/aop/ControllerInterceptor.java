@@ -1,6 +1,6 @@
 package com.frank.boot.aop;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.frank.boot.annotation.Export;
 import com.frank.boot.domain.system.ResultData;
 import com.frank.boot.domain.system.SysExportConfig;
@@ -78,9 +78,9 @@ public class ControllerInterceptor {
             String uuid = sra.getRequest().getParameter("uuid");
             if(resultData.getPager()!=null&&resultData.getPager().isExport()){
                 if(export!=null||!StringUtils.isEmpty(uuid)){
-                    EntityWrapper<SysExportConfig> entityWrapper = new EntityWrapper();
-                    entityWrapper.eq("uuid",export!=null?export.value():uuid);
-                    SysExportConfig sheetResult = sysExportConfigService.selectOne(entityWrapper);
+                    QueryWrapper<SysExportConfig> QueryWrapper = new QueryWrapper();
+                    QueryWrapper.eq("uuid",export!=null?export.value():uuid);
+                    SysExportConfig sheetResult = sysExportConfigService.getOne(QueryWrapper);
                     if(sheetResult != null){
                     	List dataList = new ArrayList<>();
                     	if(resultData.getData() instanceof ArrayList){

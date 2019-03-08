@@ -1,21 +1,12 @@
 package com.frank.boot.filter;
 
-import com.alibaba.fastjson.JSONObject;
-import com.frank.boot.dao.user.SysGlobalsqllogMapper;
-import com.frank.boot.domain.user.SysGlobalsqllog;
 import com.frank.boot.domain.user.SysUser;
 import com.frank.boot.utils.ReflectUtil;
-import com.frank.boot.utils.SpringUtil;
-
-import org.apache.ibatis.cache.CacheKey;
-import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.executor.statement.RoutingStatementHandler;
 import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.plugin.*;
-import org.apache.ibatis.session.ResultHandler;
-import org.apache.ibatis.session.RowBounds;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,7 +47,6 @@ public class SqlInterceptor implements Interceptor {
 //                ReflectUtil.setFieldValue(boundSql, "sql", permissionSql(boundSql.getSql()));
             }
             //logger.info("sql {}----",boundSql.getSql());
-            SysGlobalsqllog globalsqllog = new SysGlobalsqllog();
             try{
             	
                 long start = System.currentTimeMillis();
@@ -73,19 +63,19 @@ public class SqlInterceptor implements Interceptor {
                 } 
                 long end = System.currentTimeMillis();
                 SysUser user = (SysUser)SecurityUtils.getSubject().getPrincipal();
-                if(user != null&&"INSERT,UPDATE,DELETE".indexOf(name)>-1 &&(mappedStatement.getId().indexOf("SysGlobalsqllogMapper")== -1||(mappedStatement.getId().indexOf("SysGlobalsqllogMapper")> -1&&!"INSERT".equals(name)))){
-                    user.getUserName();
-                    globalsqllog.setUserid(user.getUserName());
-                    globalsqllog.setUsername(user.getName());
-                    globalsqllog.setOperate(name);
-                    globalsqllog.setExcutetime((end-start));
-                    globalsqllog.setParams(JSONObject.toJSONString(boundSql.getParameterObject()));
-                    globalsqllog.setMapperid(mappedStatement.getId());
-                    globalsqllog.setSql(boundSql.getSql());
-                    globalsqllog.setResultcount(resultCount);
-                    SysGlobalsqllogMapper globalsqllogMapper = SpringUtil.getBean(SysGlobalsqllogMapper.class);
+//                if(user != null&&"INSERT,UPDATE,DELETE".indexOf(name)>-1 &&(mappedStatement.getId().indexOf("SysGlobalsqllogMapper")== -1||(mappedStatement.getId().indexOf("SysGlobalsqllogMapper")> -1&&!"INSERT".equals(name)))){
+//                    user.getUserName();
+//                    globalsqllog.setUserid(user.getUserName());
+//                    globalsqllog.setUsername(user.getName());
+//                    globalsqllog.setOperate(name);
+//                    globalsqllog.setExcutetime((end-start));
+//                    globalsqllog.setParams(JSONObject.toJSONString(boundSql.getParameterObject()));
+//                    globalsqllog.setMapperid(mappedStatement.getId());
+//                    globalsqllog.setSql(boundSql.getSql());
+//                    globalsqllog.setResultcount(resultCount);
+//                    SysGlobalsqllogMapper globalsqllogMapper = SpringUtil.getBean(SysGlobalsqllogMapper.class);
 //                    globalsqllogMapper.insert(globalsqllog);
-                }
+//                }
             }catch(Exception e){
             	logger.error("发生异常{}", e.getMessage());
             }finally {

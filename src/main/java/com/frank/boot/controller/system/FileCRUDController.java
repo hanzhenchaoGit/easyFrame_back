@@ -5,7 +5,7 @@
 //import java.util.*;
 //import java.util.List;
 //
-//import com.baomidou.mybatisplus.mapper.EntityWrapper;
+//import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 //import com.frank.boot.domain.system.UploadFileList;
 //import com.frank.boot.service.system.UploadFileListService;
 //import com.frank.boot.utils.DateUtils;
@@ -91,7 +91,7 @@
 //	public ResultData getFileListByGroupid(@RequestParam("groupid") String groupid){
 //		String address = request.getRequestURL()
 //						.substring(0,request.getRequestURL().indexOf(String.valueOf(request.getLocalPort())))+request.getLocalPort()+"/file/getFileById?id=";
-//		List<UploadFileList> fileLists = uploadFileListService.selectList(new EntityWrapper<UploadFileList>().eq("groupid",groupid));
+//		List<UploadFileList> fileLists = uploadFileListService.selectList(new QueryWrapper<UploadFileList>().eq("groupid",groupid));
 //		for(UploadFileList file : fileLists){
 //			file.setFileurl(address+file.getId());
 //		}
@@ -106,7 +106,7 @@
 //		if(localFile.exists()){
 //			localFile.delete();
 //		}
-//		uploadFileListService.deleteById(id);
+//		uploadFileListService.removeById(id);
 //		return new ResultData();
 //	}
 //	@GetMapping("/getFileById")

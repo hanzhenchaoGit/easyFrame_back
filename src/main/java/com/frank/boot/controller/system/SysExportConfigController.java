@@ -1,6 +1,6 @@
 package com.frank.boot.controller.system;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.frank.boot.annotation.Export;
 import com.frank.boot.controller.base.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,21 +40,21 @@ public class SysExportConfigController extends BaseController{
         		throw new SystemException("导出配置请求中未发现uuid 无法保存");
         	}
         }
-        iSysExportConfigService.insertOrUpdate(iSysExportConfig);
+        iSysExportConfigService.saveOrUpdate(iSysExportConfig);
         return new ResultData(iSysExportConfig.getUuid());
     }
     @Export("")
     @GetMapping("/getSysExportConfigByPager")
     public ResultData getSysExportConfigListByPager() throws PagerException {
-        EntityWrapper<SysExportConfig> query = new EntityWrapper<>();
+        QueryWrapper<SysExportConfig> query = new QueryWrapper<>();
         if(!StringUtils.isEmpty(getString("sheet_name"))){
           query.like("sheet_name",getString("sheet_name"));
         }
-        return new ResultData(iSysExportConfigService.selectPage(getPager(),query),getPager());
+        return new ResultData(iSysExportConfigService.page(getPager(),query),getPager());
     }
     @GetMapping("/delSysExportConfig")
     public ResultData del(@RequestParam Integer id) {
-        iSysExportConfigService.deleteById(id);
+        iSysExportConfigService.removeById(id);
         return new ResultData();
     }
     public static void main(String[] args) {

@@ -1,8 +1,7 @@
 package com.frank.boot.service.task;
 
 import com.frank.boot.domain.task.ReportArea;
-import com.baomidou.mybatisplus.service.IService;
-
+import com.baomidou.mybatisplus.extension.service.IService;
 /**
  * <p>
  *  服务类

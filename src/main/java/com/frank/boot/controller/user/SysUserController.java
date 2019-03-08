@@ -1,7 +1,7 @@
 package com.frank.boot.controller.user;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.frank.boot.annotation.Export;
 import com.frank.boot.controller.base.BaseController;
 import com.frank.boot.domain.system.SysMenus;
@@ -83,7 +83,7 @@ public class SysUserController extends BaseController{
             }
         }
         if(!StringUtils.isEmpty(menuIds)){
-            List<SysMenus> menus = sysMenusService.getMenusByFileter(0,menuIds);
+            List<SysMenus> menus = sysMenusService.getMenusByFileter(0,menuIds.replaceFirst(",", ""));
             sysUser.setMenus(menus);
         }
         return new ResultData(sysUser);
@@ -95,7 +95,7 @@ public class SysUserController extends BaseController{
             String password = userInfo.get("password");
             String hashAlgorithmName = "MD5";
             Object obj = new SimpleHash(hashAlgorithmName, password, "", hashIterations);
-            iSysUserService.updateForSet("pass_word='"+obj.toString()+"'",new EntityWrapper<SysUser>().eq("user_name",userName));
+//            iSysUserService.updateForSet("pass_word='"+obj.toString()+"'",new QueryWrapper<SysUser>().eq("user_name",userName));
         }else{
             throw new SystemException("修改密码失败，用户信息异常，登陆用户不一致！");
         }

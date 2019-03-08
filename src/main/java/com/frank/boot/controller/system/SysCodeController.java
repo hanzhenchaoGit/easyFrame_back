@@ -1,6 +1,6 @@
 package com.frank.boot.controller.system;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.frank.boot.controller.base.BaseController;
 import com.frank.boot.domain.system.ResultData;
 import com.frank.boot.exception.PagerException;
@@ -23,7 +23,7 @@ public class SysCodeController extends BaseController{
 
     @PostMapping("/addSysCode")
     public ResultData add(@RequestBody SysCode iSysCode) {
-        iSysCodeService.insertOrUpdate(iSysCode);
+        iSysCodeService.saveOrUpdate(iSysCode);
         return new ResultData();
     }
 }

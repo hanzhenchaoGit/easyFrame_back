@@ -1,6 +1,6 @@
 package com.frank.boot.controller.system;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.frank.boot.controller.base.BaseController;
 import com.frank.boot.domain.system.ResultData;
 import com.frank.boot.domain.system.UploadFileList;
@@ -58,7 +58,7 @@ public class FileController extends BaseController {
                 upFile.setFileurl(mongoFileNameId);
                 upFile.setGroupid(groupid);
                 upFile.setUploaduser(getCurrentUser().getUserName());
-                fileListService.insert(upFile);
+                fileListService.save(upFile);
                 resultData.setData(upFile);
             }else{
                 resultData.setMsg("上传失败");
@@ -70,7 +70,7 @@ public class FileController extends BaseController {
     public ResultData getFileListByGroupid(@RequestParam("groupid") String groupid){
         String address = request.getRequestURL()
                 .substring(0,request.getRequestURL().indexOf(String.valueOf(request.getLocalPort())))+request.getLocalPort()+"/file/getFile?fn=";
-        List<UploadFileList> fileLists = fileListService.selectList(new EntityWrapper<UploadFileList>().eq("groupid",groupid));
+        List<UploadFileList> fileLists = fileListService.list(new QueryWrapper<UploadFileList>().eq("groupid",groupid));
         for(UploadFileList file : fileLists){
             file.setFileurl(address+file.getFileurl());
         }
@@ -85,7 +85,7 @@ public class FileController extends BaseController {
 //        if(localFile.exists()){
 //            localFile.delete();
 //        }
-//        fileListService.deleteById(id);
+//        fileListService.removeById(id);
         return new ResultData();
     }
     @GetMapping("/getFile")

@@ -1,7 +1,7 @@
 package com.frank.boot.controller.system;
 
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.frank.boot.controller.base.BaseController;
 import com.frank.boot.exception.PagerException;
 import com.frank.boot.domain.system.ResultData;
@@ -88,12 +88,12 @@ public class LoginController extends BaseController {
 				log.setUsername(userInfo.getName());
 				log.setSessionId(sessionUtils.getShiroSession().getId().toString());
 				log.setLoginip(NetUtils.getIpAddress(request));
-				logService.insert(log);
+				logService.save(log);
 				break;
 			}
 			case "logout_force": {
-				logService.updateForSet("logoutdate='"+DateUtils.getCurrentDateTime()+"'",
-						new EntityWrapper<SysUserloginLog>().eq("session_id", sessionUtils.getShiroSession().getId().toString()));
+//				logService.updateForSet("logoutdate='"+DateUtils.getCurrentDateTime()+"'",
+//						new QueryWrapper<SysUserloginLog>().eq("session_id", sessionUtils.getShiroSession().getId().toString()));
 				break;
 			}
 		}

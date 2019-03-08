@@ -1,6 +1,6 @@
 package com.frank.boot.controller.system;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.frank.boot.annotation.Export;
 import com.frank.boot.controller.base.BaseController;
 import org.apache.shiro.SecurityUtils;
@@ -52,7 +52,7 @@ public class SysSqlConfigController extends BaseController {
             iSysSqlConfig.setUpdatetime(new Date());
             iSysSqlConfig.setUpdateuserid(getCurrentUser().getUserName());
         }
-        iSysSqlConfigService.insertOrUpdate(iSysSqlConfig);
+        iSysSqlConfigService.saveOrUpdate(iSysSqlConfig);
         resultData.setData(iSysSqlConfig.getUuid());
         return resultData;
     }
@@ -64,33 +64,33 @@ public class SysSqlConfigController extends BaseController {
 //        //获取所有的RequestMapping
 //        Map<String, HandlerMapping> allRequestMappings = BeanFactoryUtils.beansOfTypeIncludingAncestors(webApplicationContext,
 //                HandlerMapping.class, true, false);
-        EntityWrapper<SysSqlConfig> query = new EntityWrapper<>();
+        QueryWrapper<SysSqlConfig> query = new QueryWrapper<>();
         if (!StringUtils.isEmpty(getString("name"))) {
             query.like("name", getString("name"));
         }
         if (!StringUtils.isEmpty(getString("id"))) {
             query.eq("id", getString("id"));
         }
-        iSysSqlConfigService.selectByMap(null);
-        iSysSqlConfigService.selectPage(getPager(), query);
-        return new ResultData(iSysSqlConfigService.selectPage(getPager(), query), getPager());
+        iSysSqlConfigService.listMaps(null);
+        iSysSqlConfigService.page(getPager(), query);
+        return new ResultData(iSysSqlConfigService.page(getPager(), query), getPager());
     }
 
     @GetMapping("/getSysSqlConfigList")
     public ResultData getSysSqlConfigList() {
-        EntityWrapper<SysSqlConfig> query = new EntityWrapper<>();
+        QueryWrapper<SysSqlConfig> query = new QueryWrapper<>();
         if (!StringUtils.isEmpty(getString("name"))) {
             query.like("name", getString("name"));
         }
         if (!StringUtils.isEmpty(getString("id"))) {
             query.eq("id", getString("id"));
         }
-        return new ResultData(iSysSqlConfigService.selectList(query));
+        return new ResultData(iSysSqlConfigService.list(query));
     }
 
     @GetMapping("/delSysSqlConfig")
     public ResultData del(@RequestParam Integer id) {
-        iSysSqlConfigService.deleteById(id);
+        iSysSqlConfigService.removeById(id);
         return new ResultData();
     }
 }

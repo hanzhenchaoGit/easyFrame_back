@@ -1,8 +1,7 @@
 package com.frank.boot.service.system;
 
 import com.frank.boot.domain.system.SysTask;
-import com.baomidou.mybatisplus.service.IService;
-
+import com.baomidou.mybatisplus.extension.service.IService;
 /**
  * <p>
  * 系统定时作业-quartz 服务类

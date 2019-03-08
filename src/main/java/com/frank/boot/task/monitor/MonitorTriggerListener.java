@@ -42,7 +42,7 @@ public class MonitorTriggerListener implements TriggerListener {
         }catch (Throwable e) {
             logger.error("记录job开始出错",e);
         }finally {
-            quartzLogService.insert(quartzLog);
+            quartzLogService.save(quartzLog);
         }
     }
     
@@ -63,7 +63,7 @@ public class MonitorTriggerListener implements TriggerListener {
         quartzLog.setJruntime(jobExecutionContext.getJobRunTime());
         quartzLog.setIssuccess("Y");
         quartzLog.setJendtime(new Date());
-        quartzLogService.insertOrUpdate(quartzLog);
+        quartzLogService.saveOrUpdate(quartzLog);
     }
 
     @Override

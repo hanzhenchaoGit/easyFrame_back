@@ -1,7 +1,7 @@
 package com.frank.boot.controller.system;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.frank.boot.controller.base.BaseController;
 import com.frank.boot.domain.system.ResultData;
 import com.frank.boot.domain.task.QuartzLog;
@@ -38,7 +38,7 @@ public class SysTaskController extends BaseController{
     QuartzLogService quartzLogService;
     @PostMapping("/addSysTask")
     public ResultData add(@RequestBody SysTask iSysTask) throws SystemException {
-        iSysTaskService.insertOrUpdate(iSysTask);
+        iSysTaskService.saveOrUpdate(iSysTask);
 
         if(iSysTask.getId() == null){
             quartzUtils.addJob(iSysTask);
@@ -82,8 +82,8 @@ public class SysTaskController extends BaseController{
     }
 
     @GetMapping("/getSysTaskByPager")
-    public ResultData getSysTaskListByPager() throws PagerException {
-        EntityWrapper<SysTask> query = new EntityWrapper<>();
+    public ResultData getSysTaskListByPager(@RequestBody SysTask sysTask) throws PagerException {
+        QueryWrapper<SysTask> query = new QueryWrapper<>();
         if(!StringUtils.isEmpty(getString("name"))){
           query.like("name",getString("name"));
         }
@@ -93,28 +93,28 @@ public class SysTaskController extends BaseController{
         if(!StringUtils.isEmpty(getString("group"))){
           query.eq("group",getString("group"));
         }
-        Page<SysTask> tasks = iSysTaskService.selectPage(getPager(),query);
-        tasks.getRecords().forEach(sysTask -> {
+        IPage<SysTask> tasks = iSysTaskService.page(sysTask.getPage(),query);
+        tasks.getRecords().forEach(task -> {
             try {
-                sysTask.setState(quartzUtils.getJobStatus(sysTask.getGroup(),sysTask.getName()));
+                task.setState(quartzUtils.getJobStatus(task.getGroup(),task.getName()));
             } catch (SchedulerException e) {
                 e.printStackTrace();
                 logger.error("查询状态出错"+e.getMessage());
-                sysTask.setState("");
+                task.setState("");
             }
         });
         return new ResultData(tasks,getPager());
     }
     @GetMapping("/delSysTask")
     public ResultData del(@RequestParam Integer id) throws SystemException {
-        SysTask task = iSysTaskService.selectById(id);
+        SysTask task = iSysTaskService.getById(id);
         quartzUtils.deleteJob(task);
-        iSysTaskService.deleteById(id);
+        iSysTaskService.removeById(id);
         return new ResultData();
     }
     @GetMapping("/getQuartzLogs")
     public ResultData getQuartzLogs(@RequestParam String jobKey) throws PagerException {
-        return new ResultData(quartzLogService.selectPage(getPager(),new EntityWrapper<QuartzLog>().eq("jkey",jobKey).orderBy("starttime",false)));
+        return new ResultData(quartzLogService.page(getPager(),new QueryWrapper<QuartzLog>().eq("jkey",jobKey)));
     }
 }
 

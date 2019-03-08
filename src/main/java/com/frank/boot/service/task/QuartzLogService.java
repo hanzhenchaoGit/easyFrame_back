@@ -1,8 +1,7 @@
 package com.frank.boot.service.task;
 
 import com.frank.boot.domain.task.QuartzLog;
-import com.baomidou.mybatisplus.service.IService;
-
+import com.baomidou.mybatisplus.extension.service.IService;
 /**
  * <p>
  * 定时作业监控日志	 服务类

@@ -1,7 +1,8 @@
 package com.frank.boot.service.system.impl;
 
-import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.frank.boot.service.system.SystemService;
 import com.frank.boot.dao.system.CommonDao;
 import com.frank.boot.dao.system.SysSqlConfigMapper;

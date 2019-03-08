@@ -1,7 +1,7 @@
 package com.frank.boot.dao.user;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.frank.boot.domain.user.SysUserloginLog;
-import com.baomidou.mybatisplus.mapper.BaseMapper;
 
 /**
  * <p>

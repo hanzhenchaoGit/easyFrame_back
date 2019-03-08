@@ -3,7 +3,7 @@ package com.frank.boot.service.system.impl;
 import com.frank.boot.domain.system.SysExportConfig;
 import com.frank.boot.dao.system.SysExportConfigMapper;
 import com.frank.boot.service.system.SysExportConfigService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 /**
  * <p>

@@ -1,8 +1,7 @@
 package com.frank.boot.service.system;
 
 import com.frank.boot.domain.system.SysOrganizational;
-import com.baomidou.mybatisplus.service.IService;
-
+import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
 
 /**

@@ -3,7 +3,7 @@ package com.frank.boot.service.system.impl;
 import com.frank.boot.domain.system.UploadFileList;
 import com.frank.boot.dao.system.UploadFileListMapper;
 import com.frank.boot.service.system.UploadFileListService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 /**
  * <p>

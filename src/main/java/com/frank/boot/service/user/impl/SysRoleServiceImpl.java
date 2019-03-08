@@ -3,7 +3,7 @@ package com.frank.boot.service.user.impl;
 import com.frank.boot.domain.user.SysRole;
 import com.frank.boot.dao.user.SysRoleMapper;
 import com.frank.boot.service.user.SysRoleService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;

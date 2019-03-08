@@ -1,10 +1,10 @@
 package com.frank.boot.domain.system;
 
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.enums.FieldStrategy;
-import com.baomidou.mybatisplus.enums.IdType;
+import com.baomidou.mybatisplus.annotation.FieldStrategy;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.frank.boot.domain.user.SysPermission;
-import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import java.util.List;
 
@@ -36,7 +36,7 @@ public class SysMenus implements Serializable {
     /**
      * 图标
      */
-    @TableField(strategy=FieldStrategy.IGNORED)
+    @TableField(strategy= FieldStrategy.IGNORED)
     private String icon;
     /**
      * 可访问的角色

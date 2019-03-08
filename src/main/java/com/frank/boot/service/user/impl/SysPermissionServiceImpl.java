@@ -3,7 +3,7 @@ package com.frank.boot.service.user.impl;
 import com.frank.boot.domain.user.SysPermission;
 import com.frank.boot.dao.user.SysPermissionMapper;
 import com.frank.boot.service.user.SysPermissionService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 /**
  * <p>

@@ -3,7 +3,7 @@ package com.frank.boot.service.task.impl;
 import com.frank.boot.domain.task.QuartzLog;
 import com.frank.boot.dao.task.QuartzLogMapper;
 import com.frank.boot.service.task.QuartzLogService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 /**
  * <p>

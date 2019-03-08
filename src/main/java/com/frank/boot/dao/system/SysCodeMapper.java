@@ -1,7 +1,8 @@
 package com.frank.boot.dao.system;
 
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.frank.boot.domain.system.SysCode;
-import com.baomidou.mybatisplus.mapper.BaseMapper;
 
 /**
  * <p>

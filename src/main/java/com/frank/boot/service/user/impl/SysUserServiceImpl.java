@@ -1,7 +1,7 @@
 package com.frank.boot.service.user.impl;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.frank.boot.dao.user.SysUserRoleMapper;
 import com.frank.boot.domain.user.SysUser;
 import com.frank.boot.domain.user.SysUserOrganizational;
@@ -9,7 +9,7 @@ import com.frank.boot.dao.user.SysUserMapper;
 import com.frank.boot.dao.user.SysUserOrganizationalMapper;
 import com.frank.boot.domain.user.SysUserRole;
 import com.frank.boot.service.user.SysUserService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Arrays;
@@ -45,10 +45,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public void addUser(SysUser sysUser) {
-        this.insertOrUpdate(sysUser);
+        this.saveOrUpdate(sysUser);
         System.out.println("USERID= " + sysUser.getId());
         String [] orgIds = sysUser.getOrganization().split(",");
-        sysUserOrganizationalMapper.delete(new EntityWrapper<SysUserOrganizational>().eq("userid", sysUser.getId()));
+        sysUserOrganizationalMapper.delete(new QueryWrapper<SysUserOrganizational>().eq("userid", sysUser.getId()));
         for (String orgId : orgIds) {
         	SysUserOrganizational userOrg = new SysUserOrganizational();
         	userOrg.setOrgid(orgId);
@@ -59,7 +59,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
 	@Override
 	public void addUserRole(List<SysUserRole> userRoles) {
-		sysUserRoleMapper.delete(new EntityWrapper<SysUserRole>().eq("user_id", userRoles.get(0).getUserId()));
+		sysUserRoleMapper.delete(new QueryWrapper<SysUserRole>().eq("user_id", userRoles.get(0).getUserId()));
 		userRoles.forEach(u->{
 			sysUserRoleMapper.insert(u);
 		});
@@ -70,7 +70,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 //		SysUser user = new SysUser();
 //		user.setUserEnable(2);
 //		Arrays.asList(ids.split(",")).stream().forEach(x -> 
-//		sysUserMapper.update(user, new EntityWrapper<SysUser>().eq("id", x)));
+//		sysUserMapper.update(user, new QueryWrapper<SysUser>().eq("id", x)));
 	}
 
 	@Override

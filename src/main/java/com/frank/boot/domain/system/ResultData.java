@@ -1,6 +1,6 @@
 package com.frank.boot.domain.system;
 
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.frank.boot.utils.SysContent;
 import org.apache.commons.lang.StringUtils;
 import java.util.HashMap;

@@ -1,8 +1,6 @@
 package com.frank.boot;
 
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure;
-import com.wwjd.starter.canal.annotation.EnableCanalClient;
-import org.activiti.spring.boot.SecurityAutoConfiguration;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,7 +8,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 // 排除druid自动查找配置
-@SpringBootApplication(exclude = {DruidDataSourceAutoConfigure.class,SecurityAutoConfiguration.class} )
+@SpringBootApplication(exclude = {DruidDataSourceAutoConfigure.class} )
 //@SpringBootApplication(exclude = DruidDataSourceAutoConfigure.class)
 @MapperScan("com.frank.boot.dao")
 //@EnableCanalClient

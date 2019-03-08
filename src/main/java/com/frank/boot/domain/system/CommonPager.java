@@ -1,7 +1,7 @@
 package com.frank.boot.domain.system;
 
 
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 public class CommonPager<T> extends Page {
     private boolean export;
