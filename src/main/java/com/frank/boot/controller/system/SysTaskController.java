@@ -81,8 +81,8 @@ public class SysTaskController extends BaseController{
         return new ResultData();
     }
 
-    @GetMapping("/getSysTaskByPager")
-    public ResultData getSysTaskListByPager(@RequestBody SysTask sysTask) throws PagerException {
+    @PostMapping("/getSysTaskByPager")
+    public ResultData getSysTaskListByPager(@RequestBody SysTask sysTask) {
         QueryWrapper<SysTask> query = new QueryWrapper<>();
         if(!StringUtils.isEmpty(getString("name"))){
           query.like("name",getString("name"));
@@ -96,14 +96,14 @@ public class SysTaskController extends BaseController{
         IPage<SysTask> tasks = iSysTaskService.page(sysTask.getPage(),query);
         tasks.getRecords().forEach(task -> {
             try {
-                task.setState(quartzUtils.getJobStatus(task.getGroup(),task.getName()));
+                task.setState(quartzUtils.getJobStatus(task.getTaskGroup(),task.getTaskName()));
             } catch (SchedulerException e) {
                 e.printStackTrace();
                 logger.error("查询状态出错"+e.getMessage());
                 task.setState("");
             }
         });
-        return new ResultData(tasks,getPager());
+        return new ResultData(tasks);
     }
     @GetMapping("/delSysTask")
     public ResultData del(@RequestParam Integer id) throws SystemException {
@@ -112,7 +112,7 @@ public class SysTaskController extends BaseController{
         iSysTaskService.removeById(id);
         return new ResultData();
     }
-    @GetMapping("/getQuartzLogs")
+    @PostMapping("/getQuartzLogs")
     public ResultData getQuartzLogs(@RequestParam String jobKey) throws PagerException {
         return new ResultData(quartzLogService.page(getPager(),new QueryWrapper<QuartzLog>().eq("jkey",jobKey)));
     }

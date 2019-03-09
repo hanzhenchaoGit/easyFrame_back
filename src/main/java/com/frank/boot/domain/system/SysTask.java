@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.frank.boot.domain.base.PageInfo;
+import lombok.Data;
 
 import java.io.Serializable;
 
@@ -16,6 +17,7 @@ import java.io.Serializable;
  * @author frank
  * @since 2018-06-20
  */
+@Data
 public class SysTask extends PageInfo<SysTask> implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -25,11 +27,11 @@ public class SysTask extends PageInfo<SysTask> implements Serializable {
     /**
      * 作业名称 同时作为jobkey
      */
-    private String name;
+    private String taskName;
     /**
      * 作业分组
      */
-    private String group;
+    private String taskGroup;
     /**
      * 作业说明
      */
@@ -53,116 +55,4 @@ public class SysTask extends PageInfo<SysTask> implements Serializable {
      */
     private String enabled;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getGroup() {
-        return group;
-    }
-
-    public void setGroup(String group) {
-        this.group = group;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getCorn() {
-        return corn;
-    }
-
-    public void setCorn(String corn) {
-        this.corn = corn;
-    }
-
-    public String getJobClass() {
-        return jobClass;
-    }
-
-    public void setJobClass(String jobClass) {
-        this.jobClass = jobClass;
-    }
-
-    public Date getCreatetime() {
-        return createtime;
-    }
-
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
-    }
-
-    public String getCreateuserid() {
-        return createuserid;
-    }
-
-    public void setCreateuserid(String createuserid) {
-        this.createuserid = createuserid;
-    }
-
-    public String getUpdatetime() {
-        return updatetime;
-    }
-
-    public void setUpdatetime(String updatetime) {
-        this.updatetime = updatetime;
-    }
-
-    public String getUpdateuserid() {
-        return updateuserid;
-    }
-
-    public void setUpdateuserid(String updateuserid) {
-        this.updateuserid = updateuserid;
-    }
-
-    public String getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(String enabled) {
-        this.enabled = enabled;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    @Override
-    public String toString() {
-        return "SysTask{" +
-        "id=" + id +
-        ", name=" + name +
-        ", group=" + group +
-        ", description=" + description +
-        ", corn=" + corn +
-        ", jobClass=" + jobClass +
-        ", createtime=" + createtime +
-        ", createuserid=" + createuserid +
-        ", updatetime=" + updatetime +
-        ", updateuserid=" + updateuserid +
-        ", enabled=" + enabled +
-        "}";
-    }
 }

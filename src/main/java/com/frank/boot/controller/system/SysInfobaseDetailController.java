@@ -29,13 +29,13 @@ public class SysInfobaseDetailController extends BaseController {
     ISysInfobaseDetailService iSysInfobaseDetailService;
     @PostMapping("/add")
     public ResultData add(@RequestBody SysInfobaseDetail sysInfobaseDetail) {
-        iSysInfobaseDetailService.save(sysInfobaseDetail);
+        iSysInfobaseDetailService.saveOrUpdate(sysInfobaseDetail);
         return new ResultData();
     }
     @PostMapping("/getList")
     public ResultData getList(@RequestBody SysInfobaseDetail sysInfobaseDetail) {
         QueryWrapper<SysInfobaseDetail> query = new QueryWrapper<>();
-        query.eq("type_code", sysInfobaseDetail.getTypeCode());
+        query.eq("type_id", sysInfobaseDetail.getTypeId());
         return new ResultData(iSysInfobaseDetailService.page(sysInfobaseDetail.getPage(),query));
     }
 }

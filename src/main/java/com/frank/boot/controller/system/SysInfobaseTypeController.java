@@ -6,6 +6,7 @@ import com.frank.boot.controller.base.BaseController;
 import com.frank.boot.domain.system.ResultData;
 import com.frank.boot.domain.system.SysInfobaseType;
 import com.frank.boot.service.system.ISysInfobaseTypeService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,13 +28,16 @@ public class SysInfobaseTypeController extends BaseController {
     ISysInfobaseTypeService iSysInfobaseTypeService;
     @PostMapping("/add")
     public ResultData add(@RequestBody SysInfobaseType sysInfobaseType) {
-        iSysInfobaseTypeService.save(sysInfobaseType);
+        iSysInfobaseTypeService.saveOrUpdate(sysInfobaseType);
         return new ResultData();
     }
     @PostMapping("/getList")
     public ResultData getList(@RequestBody SysInfobaseType sysInfobaseType) {
         QueryWrapper<SysInfobaseType> query = new QueryWrapper<>();
-        query.like("type_code", sysInfobaseType.getTypeName()).or().like("type_name", sysInfobaseType.getTypeName());
+        String typeName = sysInfobaseType.getTypeName();
+        if (!StringUtils.isEmpty(typeName)) {
+            query.like("type_code", sysInfobaseType.getTypeName()).or().like("type_name", sysInfobaseType.getTypeName());
+        }
         return new ResultData(iSysInfobaseTypeService.page(sysInfobaseType.getPage(), query));
     }
 }

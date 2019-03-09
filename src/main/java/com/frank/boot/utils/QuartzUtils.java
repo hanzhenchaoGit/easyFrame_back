@@ -29,7 +29,7 @@ public class QuartzUtils {
     public void initJob(SysTask job, Class cls) throws SystemException {
       logger.info("初始化任务调度");
       try {
-        TriggerKey triggerKey = TriggerKey.triggerKey(job.getName(), job.getGroup());
+        TriggerKey triggerKey = TriggerKey.triggerKey(job.getTaskName(), job.getTaskGroup());
         CronTrigger trigger = (CronTrigger) getScheduler().getTrigger(triggerKey);
         if (null == trigger) {
           addJob(job);
@@ -50,10 +50,10 @@ public class QuartzUtils {
       logger.info("向任务调度中添加定时任务");
       try {
         JobDetail jobDetail = JobBuilder.newJob((Class<? extends Job>) Class.forName(job.getJobClass()))
-          .withIdentity(job.getName(), job.getGroup()).build();
-        jobDetail.getJobDataMap().put(job.getName(), job);
+          .withIdentity(job.getTaskName(), job.getTaskGroup()).build();
+        jobDetail.getJobDataMap().put(job.getTaskName(), job);
         CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCorn());
-        Trigger trigger = TriggerBuilder.newTrigger().withIdentity(job.getName(), job.getGroup())
+        Trigger trigger = TriggerBuilder.newTrigger().withIdentity(job.getTaskName(), job.getTaskGroup())
           .withSchedule(scheduleBuilder).build();
         getScheduler().scheduleJob(jobDetail, trigger);
       } catch (Exception e) {
@@ -74,10 +74,10 @@ public class QuartzUtils {
           logger.info("定时任务信息为空，无法立即运行");
           throw new SystemException("定时任务信息为空，无法立即运行");
         }
-        JobKey jobKey = JobKey.jobKey(job.getName(), job.getGroup());
+        JobKey jobKey = JobKey.jobKey(job.getTaskName(), job.getTaskGroup());
         if(null == jobKey){
-          logger.info("任务调度中不存在[" + job.getName() + "]定时任务，不予立即运行！");
-          throw new SystemException("任务调度中不存在[" + job.getName() + "]定时任务，不予立即运行！");
+          logger.info("任务调度中不存在[" + job.getTaskName() + "]定时任务，不予立即运行！");
+          throw new SystemException("任务调度中不存在[" + job.getTaskName() + "]定时任务，不予立即运行！");
         }
         getScheduler().triggerJob(jobKey);
       } catch (Exception e) {
@@ -108,10 +108,10 @@ public class QuartzUtils {
           logger.info("暂停调度任务参数不正常！");
           throw new SystemException("暂停调度任务参数不正常！");
         }
-        JobKey jobKey = JobKey.jobKey(job.getName(), job.getGroup());
+        JobKey jobKey = JobKey.jobKey(job.getTaskName(), job.getTaskGroup());
         if(null == jobKey){
-          logger.info("任务调度中不存在[" + job.getName() + "]定时任务，不予进行暂停！");
-          throw new SystemException("任务调度中不存在[" + job.getName() + "]定时任务，不予进行暂停！");
+          logger.info("任务调度中不存在[" + job.getTaskName() + "]定时任务，不予进行暂停！");
+          throw new SystemException("任务调度中不存在[" + job.getTaskName() + "]定时任务，不予进行暂停！");
         }
         getScheduler().pauseJob(jobKey);
       } catch (Exception e) {
@@ -144,10 +144,10 @@ public class QuartzUtils {
           logger.info("恢复调度任务参数不正常！");
           return;
         }
-        JobKey jobKey = JobKey.jobKey(job.getName(), job.getGroup());
+        JobKey jobKey = JobKey.jobKey(job.getTaskName(), job.getTaskGroup());
         if(null == jobKey){
-          logger.info("任务调度中不存在[" + job.getName() + "]定时任务，不予进行恢复！");
-          throw new SystemException("任务调度中不存在[" + job.getName() + "]定时任务，不予进行恢复！");
+          logger.info("任务调度中不存在[" + job.getTaskName() + "]定时任务，不予进行恢复！");
+          throw new SystemException("任务调度中不存在[" + job.getTaskName() + "]定时任务，不予进行恢复！");
         }
         getScheduler().resumeJob(jobKey);
       } catch (Exception e) {
@@ -179,10 +179,10 @@ public class QuartzUtils {
           logger.info("删除调度任务参数不正常！");
           return;
         }
-        JobKey jobKey = JobKey.jobKey(job.getName(), job.getGroup());
+        JobKey jobKey = JobKey.jobKey(job.getTaskName(), job.getTaskGroup());
         if(null == jobKey){
-          logger.info("任务调度中不存在[" + job.getName() + "]定时任务，不予进行删除！");
-          throw new SystemException("任务调度中不存在[" + job.getName() + "]定时任务，不予进行删除！");
+          logger.info("任务调度中不存在[" + job.getTaskName() + "]定时任务，不予进行删除！");
+          throw new SystemException("任务调度中不存在[" + job.getTaskName() + "]定时任务，不予进行删除！");
         }
         getScheduler().deleteJob(jobKey);
       } catch (Exception e) {
