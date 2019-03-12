@@ -15,4 +15,6 @@ import java.util.List;
 public interface SysMenusService extends IService<SysMenus> {
 //    void saveRoleMenu
     List<SysMenus> getMenusByFileter(int pid,String menuFilter);
+
+    List<SysMenus> getAllMenuPers();
 }

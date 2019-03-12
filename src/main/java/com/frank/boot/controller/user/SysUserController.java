@@ -1,7 +1,6 @@
 package com.frank.boot.controller.user;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.frank.boot.annotation.Export;
 import com.frank.boot.controller.base.BaseController;
 import com.frank.boot.domain.system.SysMenus;
@@ -9,7 +8,6 @@ import com.frank.boot.domain.user.SysRole;
 import com.frank.boot.exception.SystemException;
 import com.frank.boot.service.system.SysMenusService;
 import com.frank.boot.utils.ShiroSessionUtils;
-import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,7 +19,6 @@ import com.frank.boot.domain.user.SysUserRole;
 import org.apache.commons.lang.StringUtils;
 import java.util.*;
 import com.frank.boot.domain.system.ResultData;
-import com.frank.boot.exception.PagerException;
 /**
  * user Controller
  * @author frank
@@ -52,19 +49,14 @@ public class SysUserController extends BaseController{
         iSysUserService.addUserRole(userRoles);
         return new ResultData();
     }
-    // 根据部门编码获取用户信息
     @Export("cee6873a-83ea-46ef-bf76-175eb323829a")
-    @GetMapping("/getSysUserByOrgPager")
-    public ResultData getSysUserListByPager() throws PagerException {
-        Map<String,String> params = new HashMap<>();
-        if(!StringUtils.isEmpty(getString("user_name"))){
-            params.put("user_name",getString("user_name"));
+    @PostMapping("/getSysUserByOrgPager")
+    public ResultData getSysUserListByPager(@RequestBody SysUser user) {
+        QueryWrapper<SysUser> query = new QueryWrapper<>();
+        if (!StringUtils.isEmpty(user.getUserName())) {
+            query.eq("user_name", user.getUserName());
         }
-        if(!StringUtils.isEmpty(getString("user_enable"))){
-            params.put("user_enable",getString("user_enable"));
-        }
-        params.put("organization", getString("organization"));
-        return new ResultData(iSysUserService.selectUserPage(getPager(),params),getPager());
+        return new ResultData(iSysUserService.page(user.getPage(),query));
     }
     @GetMapping("/operate/{operate}")
     public ResultData del(@PathVariable(value="operate", required=false) String operate,

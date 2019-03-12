@@ -113,8 +113,8 @@ public class SysTaskController extends BaseController{
         return new ResultData();
     }
     @PostMapping("/getQuartzLogs")
-    public ResultData getQuartzLogs(@RequestParam String jobKey) throws PagerException {
-        return new ResultData(quartzLogService.page(getPager(),new QueryWrapper<QuartzLog>().eq("jkey",jobKey)));
+public ResultData getQuartzLogs(@RequestBody   QuartzLog log) throws PagerException {
+        return new ResultData(quartzLogService.page(log.getPage(),new QueryWrapper<QuartzLog>().eq("jkey",log.getJkey())));
     }
 }
 

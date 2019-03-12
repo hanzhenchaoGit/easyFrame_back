@@ -85,7 +85,7 @@ public class LoginController extends BaseController {
 			case "login":{
 				SysUserloginLog log = new SysUserloginLog();
 				log.setUserid(userInfo.getUserName());
-				log.setUsername(userInfo.getName());
+				log.setUsername(userInfo.getRelName());
 				log.setSessionId(sessionUtils.getShiroSession().getId().toString());
 				log.setLoginip(NetUtils.getIpAddress(request));
 				logService.save(log);

@@ -24,7 +24,7 @@ public class SysPermissionController extends BaseController{
         iSysPermissionService.saveOrUpdate(iSysPermission);
         return new ResultData();
     }
-    @GetMapping("/getSysPermissionList")
+    @PostMapping("/getSysPermissionList")
     public ResultData getSysPermissionList(){
         QueryWrapper<SysPermission> query = new QueryWrapper<>();
         return new ResultData(iSysPermissionService.list(query));

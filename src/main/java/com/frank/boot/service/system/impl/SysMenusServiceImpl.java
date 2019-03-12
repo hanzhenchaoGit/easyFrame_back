@@ -34,6 +34,11 @@ public class SysMenusServiceImpl extends ServiceImpl<SysMenusMapper, SysMenus> i
         return this.getMenusByPid(0,menuFilter);
     }
 
+    @Override
+    public List<SysMenus> getAllMenuPers() {
+        return null;
+    }
+
     private List<SysMenus> getMenusByPid(int pId,String menuFilter){
         QueryWrapper<SysMenus> query = new QueryWrapper<>();
         query.eq("pid",pId);
@@ -45,19 +50,11 @@ public class SysMenusServiceImpl extends ServiceImpl<SysMenusMapper, SysMenus> i
         if(menusList.size() > 0){
             for(SysMenus menu : menusList) {
                 menu.setChildren(this.getMenusByPid(menu.getId(),menuFilter));
-                if(!StringUtils.isEmpty(menu.getPermissions())){
-                	Collection<String> col = new ArrayList<String>();
-//                	String [] pers = menu.getPermissions().split(",");
-//                	for (String per : pers) {
-//						col.add(per);
-//					}
-                	menu.setPermissionsArray(
-                        sysPermissionService.list(new QueryWrapper<SysPermission>().in("pkey", menu.getPermissions().split(",")))
-                	);
-                }
             }
         }
         return menusList;
     }
+
+
 }
 

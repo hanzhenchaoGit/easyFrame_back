@@ -47,11 +47,11 @@ public class CrossFilter implements Filter{
 		res.setHeader("Access-Control-Allow-Credentials", "true");
 		res.setHeader("Allow",allowedMethods);
 
-//		if(req.getMethod().equals("OPTIONS")){
-//			res.setStatus(200);
-//		}else{
+		if(req.getMethod().equals("OPTIONS")){
+			res.setStatus(200);
+		}else{
 			chain.doFilter(req, res);
-//		}
+		}
 	}
 
 	@Override

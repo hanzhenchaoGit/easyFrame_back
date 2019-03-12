@@ -3,6 +3,8 @@ package com.frank.boot.domain.task;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.frank.boot.domain.base.PageInfo;
+
 import java.io.Serializable;
 
 /**
@@ -13,7 +15,7 @@ import java.io.Serializable;
  * @author frank
  * @since 2018-09-11
  */
-public class QuartzLog implements Serializable {
+public class QuartzLog extends PageInfo<QuartzLog> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
